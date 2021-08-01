@@ -6,6 +6,7 @@
 #include <cmath>
 #include <random>
 #include <math.h>
+#include <string>
 #include "omp.h"
 
 
