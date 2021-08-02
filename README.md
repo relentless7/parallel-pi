@@ -3,7 +3,7 @@
 This is just a light framework to provide a basis for testing some parallel programming problems.
 
 Here we are using the classic monte carlo pi approximation where we throw a dart at a square with a circle embedded in it.
-The ratio of square to circle is 4/Pi, so by throwing a random number of darts we should approximate that ratio. 
+The ratio of square to circle is 4/Pi, so by throwing a large number of darts we should approximate that ratio. 
 
 This program demonstrates heterogenous computing by running the same kernel on both the cpu and gpu concurrently.
 
@@ -41,14 +41,14 @@ Here is an example of building for Windows from commandline:
 
 example:
 
-"Throw 1 million darts, with 12 threads on the CPU(s)."  
-`./pi-trials -n 1000000 -p 12 -t 2`
+"Throw 1 billion darts, with 12 threads on the CPU(s)."  
+`./pi-trials -n 1000000000 -p 12 -t 2`
 
-"Throw 1 million darts, using a GPU."  
-`./pi-trials -n 1000000 -t 3`
+"Throw 1 billion darts, using a GPU."  
+`./pi-trials -n 1000000000 -t 3`
 
-"Throw 1 million darts, with the GPU doing 770,000 and CPU doing 230,000 over 12 threads."  
-`./pi-trials -n 1000000 -p 12 -t 4 -r 0.77`
+"Throw 1 billion darts, with the GPU doing 770,000,000 and CPU doing 30,000,000 trials over 12 threads."  
+`./pi-trials -n 1000000000 -p 12 -t 4 -r 0.97`
 
 ## PI Methods
 
@@ -61,9 +61,11 @@ example:
 ## Comments
 
 The GPU is flat out faster than the CPU. Offloading a portion from the GPU that the CPU can finish before the GPU usually* yields a slight improvement in total
-processing time. But different hardware and configurations might expose other limitations that may or may not be alleviated with more custom code.
+processing time. Also as you will notice that there is some overhead to using CUDA at all, so the CPU still wins out when the number of problems it has to solve
+is smaller than that threshold. Things get more interesting with more computationally complex problems and irregular computation. Very custom and tuned solutions
+are necessary for raw performance.  
 
-Every platform is different as well and might need tuning at the compiler level and the libraries themselves might be implemented differently. So... YMMV.
+Every platform is also different and might need tuning at the compiler level and the libraries themselves might be implemented differently. So... YMMV.
 
 This code was meant to serve as a nice starting point with an emphasis on CUDA and doing as much as possible on the GPU.  
 
