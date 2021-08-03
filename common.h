@@ -11,7 +11,7 @@ namespace CommonCLI {
     int find_arg_idx(int argc, char** argv, const char* option);
     int find_int_arg(int argc, char** argv, const char* option, int default_value);
     unsigned long long find_ull_arg(int argc, char** argv, const char* option, int default_value);
-    float find_double_arg(int argc, char** argv, const char* option, float default_value);
+    double find_double_arg(int argc, char** argv, const char* option, double default_value);
     char* find_string_option(int argc, char** argv, const char* option, char* default_value);
 }
 #endif
