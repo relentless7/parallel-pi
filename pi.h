@@ -60,11 +60,11 @@ class GPUMonteCarloPi : public ParallelPi
 class HybridMonteCarloPi : public ParallelPi
 {
     public:
-        HybridMonteCarloPi(float gpu_ratio) : gpu_ratio(gpu_ratio){};
+        HybridMonteCarloPi(double gpu_ratio) : gpu_ratio(gpu_ratio){};
         double CalculateApproximation(std::int64_t num_trials);
         std::string ID() { return "[CPU+GPU Darts @ r= "+ std::to_string(gpu_ratio)+" ]";}
     private:
-        float gpu_ratio;
+        double gpu_ratio;
 };
 
 #endif
