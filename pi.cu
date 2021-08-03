@@ -47,7 +47,7 @@ void CUDAErrorCheck()
 #define NUM_THREADS 1024
 
 //wrapper for CUDA calls
-unsigned int ThrowDarts(unsigned int num_trials)
+std::int64_t ThrowDarts(std::int64_t num_trials)
 {
 	int device_num;
 	size_t mem_free = 0;
@@ -59,19 +59,19 @@ unsigned int ThrowDarts(unsigned int num_trials)
 	cudaMemGetInfo  (&mem_free, &mem_tot);
 	//std::cout<<"Free memory before copy dev: "<<mem_free<<" Total: "<<  mem_tot <<std::endl;	
 
-	unsigned int num_trials_remaining = num_trials; 
+	std::int64_t num_trials_remaining = num_trials; 
 	float *randomnums;
 		
-	unsigned int max_mem_per_iter = mem_free - 30000000; //magic number to leave enough buffer so we don't run out of memory.
-	unsigned int max_trials_per_iter = max_mem_per_iter/(2 * sizeof(float) + sizeof(int));	
+	std::int64_t max_mem_per_iter = mem_free - 30000000; //magic number to leave enough buffer so we don't run out of memory.
+	std::int64_t max_trials_per_iter = max_mem_per_iter/(2 * sizeof(float) + sizeof(int));	
 
 	//we have to promote up to 64-bit math to do this roundup(uint/uint) = uint + uint - 1/uint is not safe at max values
 	//instead double holds a uint max size variable, we will use ceil and round up.
-	unsigned int number_of_iters = ceil((double)num_trials_remaining/(double)max_trials_per_iter);
+	std::int64_t number_of_iters = ceil((double)num_trials_remaining/(double)max_trials_per_iter);
 
 	//std::cout << "Max Trials per iteration: " << max_trials_per_iter << std::endl;	
 	//std::cout << "Number of kernel launches needed: " << number_of_iters << std::endl;
-	unsigned int reducedcount = 0;
+	std::int64_t reducedcount = 0;
 
 	int blocks = (max_trials_per_iter + NUM_THREADS - 1) / NUM_THREADS;
 	int threads = NUM_THREADS;
@@ -87,7 +87,7 @@ unsigned int ThrowDarts(unsigned int num_trials)
 
 	while(num_trials_remaining > 0)
 	{
-		unsigned int num_trials_to_launch = min(num_trials_remaining, max_trials_per_iter);
+		std::int64_t num_trials_to_launch = min(num_trials_remaining, max_trials_per_iter);
 		num_trials_remaining -= num_trials_to_launch;
 	
 		// Use CuRand to generate an array of random numbers on the device
@@ -125,17 +125,17 @@ unsigned int ThrowDarts(unsigned int num_trials)
 	return reducedcount; 
 }
 
-double GPUMonteCarloPi::CalculateApproximation(unsigned int num_trials)
+double GPUMonteCarloPi::CalculateApproximation(std::int64_t num_trials)
 {
 	return ((double)ThrowDarts(num_trials)/(double)num_trials) * 4.0;
 }
 
-double HybridMonteCarloPi::CalculateApproximation(unsigned int num_trials)
+double HybridMonteCarloPi::CalculateApproximation(std::int64_t num_trials)
 {
-	unsigned int gpu_hits = 0;
-	unsigned int cpu_hits = 0;
-	unsigned int num_gpu_trials = (unsigned int)(num_trials * gpu_ratio);
-	unsigned int num_cpu_trials = num_trials - num_gpu_trials;
+	std::int64_t gpu_hits = 0;
+	std::int64_t cpu_hits = 0;
+	std::int64_t num_gpu_trials = (std::int64_t)(num_trials * gpu_ratio);
+	std::int64_t num_cpu_trials = num_trials - num_gpu_trials;
 
     #pragma omp parallel
     {

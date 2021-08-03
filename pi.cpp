@@ -1,8 +1,8 @@
 #include "pi.h"
 
-double MonteCarloPi::CalculateApproximation(unsigned int num_trials)   
+double MonteCarloPi::CalculateApproximation(std::int64_t num_trials)   
 { 
-    unsigned int count = 0; //declared outside parallel region.
+    std::int64_t count = 0; //declared outside parallel region.
     #pragma omp parallel
     {
         std::random_device rseed;
@@ -23,7 +23,7 @@ double MonteCarloPi::CalculateApproximation(unsigned int num_trials)
     return ((double)count/(double)num_trials) * 4.0;    
 }
 
-double IntegralPi::CalculateApproximation(unsigned int num_trials)   
+double IntegralPi::CalculateApproximation(std::int64_t num_trials)   
 { 
     double sum = 0;
     double step = 1.0/(double)num_trials;
@@ -40,10 +40,10 @@ double IntegralPi::CalculateApproximation(unsigned int num_trials)
     return sum * step;
 }
 
-double BuffonsNeedlePi::CalculateApproximation(unsigned int num_trials)
+double BuffonsNeedlePi::CalculateApproximation(std::int64_t num_trials)
 {
     double needle_length = 0.9;
-    unsigned int hit_count = 0;
+    std::int64_t hit_count = 0;
 
     #pragma omp parallel
     {
