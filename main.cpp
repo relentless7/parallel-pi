@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     std::int64_t num_trials = (std::int64_t)CommonCLI::find_ull_arg(argc, argv, "-n", 1000);
     int type = CommonCLI::find_int_arg(argc,argv, "-t",1);
     int num_cpu = CommonCLI::find_int_arg(argc,argv,"-p",-1);
-    float gpu_ratio = CommonCLI::find_float_arg(argc,argv,"-r",0.90);
+    double gpu_ratio = CommonCLI::find_double_arg(argc,argv,"-r",0.90);
 
 
     if(num_trials > UINT64_MAX ) // 4'294'967'295

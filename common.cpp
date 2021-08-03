@@ -29,11 +29,11 @@ unsigned long long CommonCLI::find_ull_arg(int argc, char** argv, const char* op
     return default_value;
 }
 
-float CommonCLI::find_float_arg(int argc, char** argv, const char* option, float default_value) {
+double CommonCLI::find_double_arg(int argc, char** argv, const char* option, double default_value) {
     int iplace = find_arg_idx(argc, argv, option);
 
     if (iplace >= 0 && iplace < argc - 1) {
-        return std::stof(argv[iplace + 1]);
+        return std::stod(argv[iplace + 1]);
     }
 
     return default_value;
