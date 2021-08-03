@@ -151,7 +151,7 @@ double HybridMonteCarloPi::CalculateApproximation(unsigned int num_trials)
 		std::uniform_real_distribution<double> rdist(0.0,1.0);
 					
 		#pragma omp for schedule(guided) reduction(+:cpu_hits)
-		for(long long i=0; i < num_cpu_trials; ++i)
+		for(std::int64_t i=0; i < num_cpu_trials; ++i)
 		{
 			double random_x = rdist(rgen);
 			double random_y = rdist(rgen);

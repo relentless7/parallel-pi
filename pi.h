@@ -7,7 +7,7 @@
 #include <random>
 #include <math.h>
 #include "omp.h"
-
+#include <string>
 
 // defining it makes it a little more portable.
 # define ACTUAL_PI		3.14159265358979323846	

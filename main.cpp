@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <cstdint>
 
 #include "omp.h"
 #include "pi.h"
@@ -27,13 +28,13 @@ int main(int argc, char** argv) {
     // Open Output File
     //    char* savename = find_string_option(argc, argv, "-o", nullptr);
     //    std::ofstream fsave(savename);
-    unsigned long long num_trials = CommonCLI::find_ull_arg(argc, argv, "-n", 1000);
+    std::int64_t num_trials = (std::int64_t)CommonCLI::find_ull_arg(argc, argv, "-n", 1000);
     int type = CommonCLI::find_int_arg(argc,argv, "-t",1);
     int num_cpu = CommonCLI::find_int_arg(argc,argv,"-p",-1);
     float gpu_ratio = CommonCLI::find_float_arg(argc,argv,"-r",0.90);
 
 
-    if(num_trials > UINT32_MAX ) // 4'294'967'295
+    if(num_trials > UINT64_MAX ) // 4'294'967'295
     {
         std::cout << "Number of trials limited to: " << UINT32_MAX << std::endl;
         exit(0);

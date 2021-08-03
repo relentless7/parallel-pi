@@ -10,7 +10,7 @@ double MonteCarloPi::CalculateApproximation(unsigned int num_trials)
         std::uniform_real_distribution<double> rdist(0.0,1.0);
 
         #pragma omp for reduction(+:count)
-        for(long long i=0; i < num_trials; ++i)
+        for(std::int64_t i=0; i < num_trials; ++i)
         {
             double random_x = rdist(rgen);
             double random_y = rdist(rgen);
@@ -31,7 +31,7 @@ double IntegralPi::CalculateApproximation(unsigned int num_trials)
 
     // Approx. using the Integral from 0 to 1 of 4.0/(1+x^2) dx = Pi
     #pragma omp parallel for reduction(+:sum) private(x)
-    for(long long i=0; i < num_trials; ++i)
+    for(std::int64_t i=0; i < num_trials; ++i)
     {
         x = (i + 0.5) * step;
         sum += 4.0/(1.0 + x * x); 
@@ -52,7 +52,7 @@ double BuffonsNeedlePi::CalculateApproximation(unsigned int num_trials)
         std::uniform_real_distribution<double> rdist(0.0,1.0);
 
         #pragma omp for reduction(+:hit_count)
-        for (long long i=0; i<num_trials; i++)
+        for (std::int64_t i=0; i<num_trials; i++)
         {
             double random_angle = rdist(rgen)*(2*ACTUAL_PI); 
             double x = rdist(rgen); 
